@@ -1,2 +1,177 @@
 # snupi-san-Valentin
 pagina romantica de snupii para mi amorcito
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín, Coni?</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef, #ffecd2);
+            color: #d63384;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        #si {
+            background-color: #ff6b9d;
+            color: white;
+            transform: scale(1);
+        }
+        #no {
+            background-color: #ffb3ba;
+            color: #d63384;
+            position: absolute;
+        }
+        .snoopy {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 100px;
+            height: 100px;
+            background: url('https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif') no-repeat center;
+            background-size: cover;
+            animation: floatSnoopy 5s infinite ease-in-out;
+        }
+        .snoopy2 {
+            position: absolute;
+            top: 20%;
+            right: 10%;
+            width: 80px;
+            height: 80px;
+            background: url('https://media.giphy.com/media/26AHONQ1kxJQWiWxI/giphy.gif') no-repeat center;
+            background-size: cover;
+            animation: floatSnoopy2 4s infinite ease-in-out;
+        }
+        @keyframes floatSnoopy {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        @keyframes floatSnoopy2 {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(-30px); }
+        }
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            color: #ff6b9d;
+            font-size: 2em;
+            animation: float 3s infinite ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        .message {
+            display: none;
+            font-size: 1.8em;
+            margin-top: 50px;
+            color: #ff1493;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            p { font-size: 1em; }
+            button { padding: 12px 25px; font-size: 1em; }
+            .snoopy, .snoopy2 { width: 70px; height: 70px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    <div class="snoopy"></div>
+    <div class="snoopy2"></div>
+    <h1>¿Quieres ser mi San Valentín, Coni? 💖🐶</h1>
+    <p>Mi amor Coni, eres lo mejor que me ha pasado. ¿Aceptas ser mi San Valentín este año? ¡Snoopy y yo te queremos mucho! 🐾❤️</p>
+    <div class="buttons">
+        <button id="si">¡SÍ! 😍</button>
+        <button id="no">No 😢</button>
+    </div>
+    <div class="message" id="message">¡Yay, Coni! ¡Eres mi San Valentín! Te amo mucho, y Snoopy también 💕🐶</div>
+
+    <script>
+        const siButton = document.getElementById('si');
+        const noButton = document.getElementById('no');
+        const message = document.getElementById('message');
+        const heartsContainer = document.getElementById('hearts');
+
+        let siScale = 1;
+        let noAttempts = 0;
+
+        // Crear corazones flotantes con emojis de perro
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = Math.random() > 0.5 ? '❤️' : '🐶';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 3 + 's';
+            heartsContainer.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }
+        setInterval(createHeart, 500);
+
+        // Comportamiento del botón NO: se teleporta a posiciones aleatorias
+        noButton.addEventListener('mouseover', () => {
+            noAttempts++;
+            const screenWidth = window.innerWidth - 150;
+            const screenHeight = window.innerHeight - 100;
+            const randomX = Math.random() * screenWidth;
+            const randomY = Math.random() * screenHeight;
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
+            if (noAttempts > 10) {
+                noButton.style.display = 'none'; // Después de 10 intentos, desaparece
+            }
+        });
+
+        // Comportamiento del botón SÍ: crece cada vez que se hace hover
+        siButton.addEventListener('mouseover', () => {
+            siScale += 0.3;
+            siButton.style.transform = `scale(${siScale})`;
+        });
+
+        // Al presionar SÍ, muestra el mensaje
+        siButton.addEventListener('click', () => {
+            message.style.display = 'block';
+            siButton.style.display = 'none';
+            noButton.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
